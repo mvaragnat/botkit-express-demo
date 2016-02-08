@@ -1,8 +1,8 @@
 # Botkit demo using Express and Mongo
 
-The folds at [Botkit](https://github.com/howdyai/botkit) have done an amazing job at building a framework for (Slack) bots applications. They have included an [example](https://github.com/howdyai/botkit/blob/master/examples/slackbutton_bot.js) of creating a Slack app that can be installed with just an "Add to Slack" button, as well as an [adapter](https://github.com/howdyai/botkit-storage-mongo) allwoing to use MongoDB for storage.
+The folks at [Botkit](https://github.com/howdyai/botkit) have done an amazing job at building a framework for (Slack) bots applications. They have included an [example](https://github.com/howdyai/botkit/blob/master/examples/slackbutton_bot.js) of creating a Slack app that can be installed with just an "Add to Slack" button, as well as an [adapter](https://github.com/howdyai/botkit-storage-mongo) allowing to use MongoDB for storage.
 
-However, the example used Botkit's webserver to manage requests such as authentication, but also serving webpages. Instead, I wanted to use [Express](http://expressjs.com
+However, the example used Botkit's webserver to manage requests such as authentication, but also serving webpages. Instead, I wanted to use [Express](http://expressjs.com).
 
 ## Features
 
@@ -10,7 +10,7 @@ However, the example used Botkit's webserver to manage requests such as authenti
 ``` app/routes/routes.js ```
 
 * Uses Monk as MongoDB driver
-* Uses by default the three Botkit collections : Teams, Users, and Channels
+* Includes by default the three Botkit collections : Teams, Users, and Channels
 
 ## Configuration
 
@@ -24,6 +24,7 @@ http://yourwebsite.com/
 Then, you need to set up several environment variables before using this app.
 
 * For local deployment
+
 Create a .env file at the root of the project with the following infos:
 
 ```
@@ -34,7 +35,10 @@ PORT=5000
 ```
 
 * For Heroku deployment
-You need to add from the Heroku dashboard the SLACK_ID, SLACK_SECRET and SLACK_REDIRECT (set it to your website root). You can use MongoLab add-on to add Mongo storage, they have a free tier.
+
+You need to add from the Heroku dashboard the SLACK_ID, SLACK_SECRET and SLACK_REDIRECT (set it to your website root).
+
+You can use MongoLab add-on to add Mongo storage, they have a free tier.
 
 ## Author
 [Matthieu Varagnat](https://twitter.com/MVaragnat)
