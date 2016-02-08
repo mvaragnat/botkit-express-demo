@@ -1,0 +1,21 @@
+{
+  "name": "botkit-express-demo",
+  "version": "0.1.0",
+  "description": "Demo of Botkit within an Express app, using Mongodb database",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "botkit": "0.0.5",
+    "dotenv": "^2.0.0",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "mongodb": "^2.1.6",
+    "monk": "^1.0.1",
+    "request": "^2.69.0"
+  }
+}
