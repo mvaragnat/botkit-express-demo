@@ -25,7 +25,7 @@ Then, you need to set up several environment variables before using this app.
 
 * For local deployment
 
-Create a .env file at the root of the project with the following infos:
+Create a .env file at the root of the project with the following infos (you can modify and rename the existing .env-example file:
 
 ```
 SLACK_ID=your.id
