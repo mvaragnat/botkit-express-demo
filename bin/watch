@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+DEBUG=*,-express*,-nodemon* nodemon -e ejs,js,css server.js

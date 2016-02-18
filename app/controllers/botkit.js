@@ -1,26 +1,42 @@
-//CONFIG===============================================
+'use strict';
+// CONFIG===============================================
 
-/* Uses the slack button feature to offer a real time bot to multiple teams */
-var Botkit = require('botkit');
-var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/botkit_express_demo'
-var botkit_mongo_storage = require('../../config/botkit_mongo_storage')({mongoUri: mongoUri})
+var debug = require('debug')('startup');
 
 if (!process.env.SLACK_ID || !process.env.SLACK_SECRET || !process.env.PORT) {
   console.log('Error: Specify SLACK_ID SLACK_SECRET and PORT in environment');
   process.exit(1);
 }
 
-var controller = Botkit.slackbot({
-  storage: botkit_mongo_storage
-})
+/* Uses the slack button feature to offer a real time bot to multiple teams */
+var Botkit = require('botkit');
 
-exports.controller = controller
+const mongoUri = process.env.MONGO_URI || 'mongodb://localhost/botkit_express_demo';
+const config = {mongoUri: mongoUri};
 
-//CONNECTION FUNCTIONS=====================================================
-exports.connect = function(team_config){
-  var bot = controller.spawn(team_config);
-  controller.trigger('create_bot', [bot, team_config]);
-}
+let Storage = require('../../config/storage/mongo');
+let db = Storage.connect(config);
+
+let controller;
+
+db.then(function() {
+    let botkit_mongo_storage = Storage.setup(config);
+
+    // var botkit_mongo_storage = require('../../config/storage/mongo')(config);
+    // debug('storage', botkit_mongo_storage);
+    // var botkit_mongo_storage = null;
+
+    controller = Botkit.slackbot({
+      storage: botkit_mongo_storage
+    });
+
+    // CONNECTION FUNCTIONS=====================================================
+    exports.connect = function(team_config) {
+      var bot = controller.spawn(team_config);
+      controller.trigger('create_bot', [bot, team_config]);
+    };
+
+
 
 // just a simple way to make sure we don't
 // connect to the RTM twice for the same team
@@ -30,13 +46,12 @@ function trackBot(bot) {
   _bots[bot.config.token] = bot;
 }
 
-controller.on('create_bot',function(bot,team) {
+controller.on('create_bot', function(bot, team) {
 
   if (_bots[bot.config.token]) {
     // already online! do nothing.
-    console.log("already online! do nothing.")
-  }
-  else {
+    console.log("already online! do nothing.");
+  } else {
     bot.startRTM(function(err) {
 
       if (!err) {
@@ -127,3 +142,7 @@ controller.storage.teams.all(function(err,teams) {
   }
 
 });
+
+});
+
+exports.controller = controller;

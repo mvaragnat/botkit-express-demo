@@ -1,6 +1,10 @@
 var Request          = require('request')
 var slack           = require('../controllers/botkit')
 
+// this is a problem as botkit is still promising
+
+console.log('init slack', slack.connect);
+
 // frontend routes =========================================================
 module.exports = function(app) {
 
