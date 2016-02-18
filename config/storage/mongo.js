@@ -1,27 +1,41 @@
-var db = require('monk');
+'use strict';
+
+var MongoClient = require('mongodb'),
+    co = require('co'),
+    debug = require('debug')('mongo-storage')
+    ;
+
+let Storage = {};
+
 /**
  * botkit-storage-mongo - MongoDB driver for Botkit
  *
- * @param  {Object} config
- * @return {Object}
+ * @param  {Object} config Mongo config
+ * @return {Object} query result
  */
-module.exports = function(config) {
+Storage.connect = function(config) {
+    // let db = MongoStorage.init(config);
+    let db = MongoClient.connect('mongodb://localhost:27017/mongo-drivers');
+    return db;
+};
 
-    if (!config || !config.mongoUri)
-        throw new Error('Need to provide mongo address.');
+Storage.setup = function(db) {
+    debug('setup with', db);
 
-    var Teams = db(config.mongoUri).get('teams'),
-        Users = db(config.mongoUri).get('users'),
-        Channels = db(config.mongoUri).get('channels');
+    var Teams = db.collection('teams'),
+        Users = db.collection('users'),
+        Channels = db.collection('channels'),
+        Stories = db.collection('stories');
 
     var unwrapFromList = function(cb) {
         return function(err, data) {
-            if (err) return cb(err);
+            if (err) { return cb(err); }
             cb(null, data);
         };
     };
 
     var storage = {
+
         teams: {
             get: function(id, cb) {
                 Teams.findOne({id: id}, unwrapFromList(cb));
@@ -73,4 +87,6 @@ module.exports = function(config) {
     };
 
     return storage;
-};
+}
+
+module.exports = Storage;

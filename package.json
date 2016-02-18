@@ -4,18 +4,25 @@
   "description": "Demo of Botkit within an Express app, using Mongodb database",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "babel-node": "babel-node --stage 0 --ignore='foo|bar|baz'"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.14.2",
-    "botkit": "0.0.5",
+    "botkit": "^*",
+    "co": "^4.6.0",
     "dotenv": "^2.0.0",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
-    "mongodb": "^2.1.6",
-    "monk": "^1.0.1",
-    "request": "^2.69.0"
+    "mocha": "^2.4.5",
+    "reload": "^0.7.0",
+    "request": "^2.69.0",
+    "mongodb": "^2.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "node-inspector": "^0.12.6"
   }
 }
